@@ -32,6 +32,10 @@ KI-Agenten im Agentur-Alltag von Michael Gahn DESIGN — und soll genau das wide
 | `/divi-release` | Versions-Bump, CHANGELOG, Release-Workflow |
 | `/divi-module` | Natives Divi 5 Custom Module erstellen (React/TSX + PHP Traits) |
 | `/divi-optimize` | Performance optimieren — Core Web Vitals, Caching, Bilder |
+| `/divi-theme-builder` | Header, Footer, Single Post, Archive, CPT-Templates im Theme Builder |
+| `/divi-design-system` | Design Variables, Fluid Typography mit clamp(), Presets, Colorscheme |
+| `/divi-ai` | Divi AI sinnvoll einsetzen — Workflow, Grenzen, DSGVO |
+| `/divi-canvas` | Popups, Off-Canvas Menüs, Scroll-Trigger, Exit-Intent mit Divi Canvases |
 
 ## Grundregeln — Was Dieser Skill Immer Tut
 
@@ -120,7 +124,13 @@ MGD-Divi5-Dev/
 │       ├── divi-animations.md
 │       ├── divi-deploy.md
 │       ├── divi-debug.md
-│       └── divi-release.md
+│       ├── divi-release.md
+│       ├── divi-module.md
+│       ├── divi-optimize.md
+│       ├── divi-theme-builder.md
+│       ├── divi-design-system.md
+│       ├── divi-ai.md
+│       └── divi-canvas.md
 ├── .codex/
 │   └── commands/             ← ChatGPT Codex Commands (gleiche Dateien)
 └── skill/

@@ -2,6 +2,19 @@
 
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 
+## [1.3.0] — 2026-06-20
+
+### Hinzugefügt
+
+- `/divi-theme-builder` — Divi 5 Theme Builder: Header, Footer, Single Post, Archive, CPT-Templates, WooCommerce, Sticky Header, Dynamic Content
+- `/divi-design-system` — Design System: Divi Global Colors, CSS Custom Properties, Fluid Typography mit `clamp()`, Button-Presets, Spacing-System, Colorscheme Generator (Divi 5.5+)
+- `/divi-ai` — Divi AI Workflow: Was AI kann, wann Claude Code besser ist, DSGVO-Einschränkungen, Phasen-Workflow
+- `/divi-canvas` — Divi Canvases: Popups, Off-Canvas Menüs, Scroll-Trigger, Exit-Intent, Timer, iOS Fix, ARIA
+- Wiki: Divi Theme Builder, Divi Design System, Divi AI Workflow, Divi Canvas (4 neue Seiten)
+- Beide neue Commands-Sets in `.claude/commands/` und `.codex/commands/`
+
+---
+
 ## [1.2.0] — 2026-06-20
 
 ### Hinzugefügt
