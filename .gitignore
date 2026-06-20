@@ -1,0 +1,28 @@
+# System
+.DS_Store
+Thumbs.db
+*.log
+
+# Secrets und Credentials
+.env
+.env.*
+!.env.example
+
+# WordPress
+wp-config.php
+wp-config-local.php
+*.sql
+*.sql.gz
+backups/
+wp-content/uploads/
+
+# Build-Artefakte
+node_modules/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
