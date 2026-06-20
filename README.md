@@ -157,44 +157,9 @@ SSL, keine externen Tracker ohne Zustimmung.
 ### Deployment-Workflow
 Schrittweises Deployment mit Backup, `wp search-replace`, Cache-Clearing und Tests.
 
-## Verwandte Projekte Von Michael Gahn DESIGN
-
-- [MGD-AI-Basic-Projektordner](https://github.com/MichaelGahnDESIGN/MGD-AI-Basic-Projektordner)
-  Projektordner-Vorlage für neue KI-Projekte — als Basis für jedes neue WordPress-Projekt nutzen.
-
-- [MGD-DEV-Skill](https://github.com/MichaelGahnDESIGN/MGD-DEV-Skill)
-  Projektneutraler Skill für Release, Sync, Backup, Cleanup und Tests — passt direkt zu /divi-release.
-
-- [MGD-AI-PlayTest-Skill](https://github.com/MichaelGahnDESIGN/MGD-AI-PlayTest-Skill)
-  Funktionstest aus Nutzer-Perspektive — nach jedem Divi-Deployment sinnvoll.
-
-- [MGD-ProjectClean-Skill](https://github.com/MichaelGahnDESIGN/MGD-ProjectClean-Skill)
-  Aufräumen nach Projekt-Abschluss — Backups, Versionierung, sauber übergeben.
-
-- [MGD-Bugreport-Skill](https://github.com/MichaelGahnDESIGN/MGD-Bugreport-Skill)
-  Professionelle Bug-Reports erstellen wenn etwas in Divi schief läuft.
-
-- [MGD-AI-Project-Updater-Skill](https://github.com/MichaelGahnDESIGN/MGD-AI-Project-Updater-Skill)
-  Sichere Update-Workflows für WordPress, Plugins und Themes.
-
-- [MGD-ToDo-SKILL](https://github.com/MichaelGahnDESIGN/MGD-ToDo-SKILL)
-  Aufgabenverwaltung direkt im Projekt-Repo — für längere Divi-Projekte.
-
 ## Lizenz
 
 MIT — frei verwendbar, anpassbar, weitergeben mit Namensnennung.
-
-## Impressum
-
-Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)
-
-Michael Gahn DESIGN<br>
-Michael Gahn<br>
-Dr.-Theodor-Brugsch Str. 12<br>
-08529 Plauen, Sachsen, Deutschland<br>
-Tel.: +49 (0) 176 557 647 48<br>
-E-Mail: Anfrage@Michael-Gahn.de<br>
-Steuernummer: 223/222/02451 | USt-ID: DE288143343
 
 ## 🔒 Lokal-only — Playtests, Backups & sensible Daten
 
@@ -203,3 +168,23 @@ Diese Daten dürfen **niemals** die lokale Maschine verlassen — weder nach Git
 - **Backups:** DB-Dumps, `*.sql`, `*.sql.gz`, `backups/` bleiben lokal — nie nach GitHub, nie in den Webroot/Live.
 - **Sensible Daten:** `.env*` (außer `.env.example`), Tokens, API-Keys, Passwörter, `wp-config.php` — niemals committen/pushen.
 - **Push-Disziplin:** Nur den Hauptbranch (`main`) pushen, **niemals** `git push --all`/`--mirror`.
+
+---
+
+## Verwandte MGD Projekte
+
+| Projekt | Beschreibung |
+|---------|-------------|
+| [gvieaway_WordPress_Plugin](https://github.com/MichaelGahnDESIGN/gvieaway_WordPress_Plugin) | Gewinnspiel-Plugin für WordPress |
+| [MGD-AI-Project-Updater-Skill](https://github.com/MichaelGahnDESIGN/MGD-AI-Project-Updater-Skill) | Sichere Update-Workflows für WordPress |
+| [MGD-ToDo-SKILL](https://github.com/MichaelGahnDESIGN/MGD-ToDo-SKILL) | Aufgabenverwaltung direkt im Projekt-Repo |
+| [MGD-AI-Basic-Projektordner](https://github.com/MichaelGahnDESIGN/MGD-AI-Basic-Projektordner) | Projektvorlage für KI-Agenten |
+| [MGD-DEV-Skill](https://github.com/MichaelGahnDESIGN/MGD-DEV-Skill) | Release, Sync, Backup und Wissensdokumentation |
+
+→ Alle öffentlichen Projekte: [github.com/MichaelGahnDESIGN](https://github.com/MichaelGahnDESIGN)
+
+---
+
+## Impressum
+
+Angaben gemäß § 5 DDG — Siehe [`IMPRESSUM.md`](IMPRESSUM.md).
