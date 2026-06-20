@@ -30,6 +30,8 @@ KI-Agenten im Agentur-Alltag von Michael Gahn DESIGN — und soll genau das wide
 | `/divi-deploy` | Deployment auf Live-Server durchführen |
 | `/divi-debug` | Systematisches Debugging von Divi-Problemen |
 | `/divi-release` | Versions-Bump, CHANGELOG, Release-Workflow |
+| `/divi-module` | Natives Divi 5 Custom Module erstellen (React/TSX + PHP Traits) |
+| `/divi-optimize` | Performance optimieren — Core Web Vitals, Caching, Bilder |
 
 ## Grundregeln — Was Dieser Skill Immer Tut
 

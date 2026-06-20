@@ -3,8 +3,8 @@ name: divi5-dev
 description: >
   Use when the user invokes /divi-install, /divi-install-docker, /divi-childtheme,
   /divi-backup, /divi-dev, /divi-project-filesystem, /divi-plugin, /divi-animations,
-  /divi-deploy, /divi-debug, /divi-release — or wenn der Nutzer mit WordPress + Divi 5
-  entwickeln, designen oder Probleme lösen möchte.
+  /divi-deploy, /divi-debug, /divi-release, /divi-module, /divi-optimize — or wenn
+  der Nutzer mit WordPress + Divi 5 entwickeln, designen oder Probleme lösen möchte.
 ---
 
 # MGD Divi 5 Dev Skill
@@ -836,6 +836,302 @@ Versions-Bump, CHANGELOG, Deployment, Backup.
 .et_animated           { /* Animation abgespielt */ }
 .et-fb                 { /* Divi Frontend Builder aktiv */ }
 ```
+
+---
+
+### /divi-module
+
+Natives Divi 5 Custom Module erstellen — React/TSX Frontend, PHP Traits Backend, `module.json` Deklaration.
+
+**Plugin-Dateistruktur:**
+```
+wp-content/plugins/
+└── mein-divi-modul/
+    ├── mein-divi-modul.php        ← Plugin-Header + Registrierung
+    ├── composer.json
+    ├── package.json
+    ├── webpack.config.js
+    ├── tsconfig.json
+    ├── modules/
+    │   └── MeinModul/
+    │       ├── MeinModul.php           ← Hauptklasse
+    │       └── MeinModulTrait/
+    │           ├── CustomCssTrait.php
+    │           ├── ModuleClassnamesTrait.php
+    │           ├── ModuleScriptDataTrait.php
+    │           ├── ModuleStylesTrait.php
+    │           └── RenderCallbackTrait.php
+    └── src/
+        └── components/
+            └── mein-modul/
+                ├── edit.tsx                ← Builder UI
+                ├── module.json             ← Modul-Deklaration
+                ├── module.scss             ← Styling
+                ├── settings-content.tsx
+                ├── settings-design.tsx
+                ├── settings-advanced.tsx
+                ├── styles.tsx
+                └── types.ts
+```
+
+**Plugin-Hauptdatei:**
+```php
+<?php
+/**
+ * Plugin Name: Mein Divi Modul
+ * Version:     1.0.0
+ * Requires PHP: 8.2
+ */
+defined('ABSPATH') || exit;
+
+use ET\Builder\VisualBuilder\Assets\PackageBuildManager;
+
+// D5 vs. D4 erkennen
+if (function_exists('et_builder_d5_enabled') && et_builder_d5_enabled()) {
+    add_action('divi_module_library_modules_dependency_tree', function ($tree) {
+        require_once __DIR__ . '/modules/MeinModul/MeinModul.php';
+        $tree->register(new MeinModul());
+    });
+
+    add_action('divi_visual_builder_assets_before_enqueue_scripts', function () {
+        PackageBuildManager::register_package_build(
+            'mein-modul-bundle',
+            plugin_dir_path(__FILE__) . 'visual-builder/build/',
+            [
+                'script_dependencies' => ['react', 'divi-module-library', 'wp-hooks'],
+                'style_dependencies'  => [],
+                'enqueue_location'    => 'app_window',
+            ]
+        );
+    });
+} else {
+    // Divi 4 Fallback
+    add_action('et_builder_ready', function () {
+        require_once __DIR__ . '/modules/MeinModul/MeinModulD4.php';
+        new MeinModulD4();
+    });
+}
+```
+
+**module.json (Beispiel — Text + Bild Modul):**
+```json
+{
+  "name": "mein-extension/mein-modul",
+  "title": "Mein Modul",
+  "category": "module",
+  "wrapper": { "tagName": "div" },
+  "attributes": {
+    "module": {
+      "tagName": "div",
+      "selector": "%%order_class%%",
+      "attributes": {
+        "decoration": {},
+        "advanced": {}
+      }
+    },
+    "titel": {
+      "tagName": "h2",
+      "attributes": {
+        "innerContent": {},
+        "decoration": { "font": {} }
+      },
+      "settings": { "editors": ["plainText"] }
+    },
+    "inhalt": {
+      "tagName": "div",
+      "attributes": { "innerContent": {}, "decoration": {} },
+      "settings": { "editors": ["richText"] }
+    }
+  }
+}
+```
+
+**PHP RenderCallbackTrait:**
+```php
+<?php
+namespace MeinDiviModul\Modules\MeinModul\MeinModulTrait;
+
+trait RenderCallbackTrait {
+    public function render_callback(array $attrs, $content, $render_slug): string {
+        $titel  = $attrs['titel']['innerContent']['desktop']['value'] ?? '';
+        $inhalt = $attrs['inhalt']['innerContent']['desktop']['value'] ?? '';
+
+        return sprintf(
+            '<div class="%1$s"><h2>%2$s</h2><div>%3$s</div></div>',
+            esc_attr($render_slug),
+            esc_html($titel),
+            wp_kses_post($inhalt)
+        );
+    }
+}
+```
+
+**ModuleStylesTrait:**
+```php
+<?php
+namespace MeinDiviModul\Modules\MeinModul\MeinModulTrait;
+
+use ET\Builder\Packages\Module\Options\Element\ElementComponents;
+
+trait ModuleStylesTrait {
+    public static function module_styles(array $args): void {
+        $elements = ElementComponents::component($args);
+        $elements->style_components([
+            'attrName' => 'module',
+        ]);
+    }
+}
+```
+
+**edit.tsx (Builder UI — vereinfacht):**
+```tsx
+import React, { type ReactElement } from 'react';
+import { ModuleContainer } from '@divi/module';
+import { type MeinModulAttrs } from './types';
+
+const MeinModulEdit = ({ attrs, id, name }: MeinModulEditProps): ReactElement => {
+    const { module: { decoration: moduleDecoration } = {} } = attrs;
+
+    return (
+        <ModuleContainer
+            attrs={attrs}
+            decorationComponents={{ module: moduleDecoration }}
+            id={id}
+            name={name}
+            stylesComponent={ModuleStyles}
+        >
+            <div className="mein-modul__inhalt">
+                {/* Builder-spezifisches Rendering */}
+            </div>
+        </ModuleContainer>
+    );
+};
+
+export { MeinModulEdit };
+```
+
+**webpack.config.js (Externals für Divi-Pakete):**
+```javascript
+module.exports = {
+    externals: {
+        '@divi/data':           'window.divi.data',
+        '@divi/module-library': 'window.divi.moduleLibrary',
+        '@divi/global-data':    'window.divi.globalData',
+        'react':                'React',
+        'react-dom':            'ReactDOM',
+    },
+};
+```
+
+**npm-Befehle:**
+```bash
+npm install          # Abhängigkeiten installieren
+npm run start        # Webpack Watch (Entwicklung)
+npm run build        # Production Build
+npm run zip          # Distributions-ZIP
+```
+
+**D5 vs. D4 Erkennung (allgemein nutzbar):**
+```php
+if (function_exists('et_builder_d5_enabled') && et_builder_d5_enabled()) {
+    // Native Divi 5 API
+} elseif (class_exists('ET_Builder_Element')) {
+    // Divi 4 Fallback via ET_Builder_Module
+}
+```
+
+---
+
+### /divi-optimize
+
+WordPress/Divi-Installation für maximale Performance optimieren — Core Web Vitals, Caching, Bild-Optimierung.
+
+**Divi Performance-Einstellungen (Divi → Theme Options → Performance):**
+- Static CSS Generation → **AN** (generiert pro-Seite CSS statt inline)
+- Dynamic CSS → **AN** (lädt nur genutztes CSS)
+- Critical CSS → **AN** (Above-the-fold CSS inline)
+- Defer jQuery → **AN**
+- Google Fonts → **AUS** (DSGVO + Performance)
+- Page Transition → **AUS** (wenn kein Smooth-Page-Transition gewünscht)
+
+**Bild-Optimierung in WordPress:**
+```php
+// functions.php — WebP-Unterstützung aktivieren (WP 5.8+)
+add_filter('wp_upload_image_mime_transforms', function ($transforms) {
+    $transforms['image/jpeg'][] = 'image/webp';
+    $transforms['image/png'][]  = 'image/webp';
+    return $transforms;
+});
+
+// Lazy Loading global aktivieren (Standard seit WP 5.5)
+add_filter('wp_lazy_loading_enabled', '__return_true');
+
+// Bild-Größen reduzieren (JPEG-Qualität)
+add_filter('jpeg_quality', fn() => 82);
+add_filter('wp_editor_set_quality', fn() => 82);
+```
+
+**Script-Strategie (WordPress 6.3+ native defer/async):**
+```php
+// Nicht-kritische Scripts deferrieren
+add_filter('script_loader_tag', function ($tag, $handle, $src) {
+    $defer_scripts = ['gsap', 'swiper', 'aos', 'alpine'];
+    if (in_array($handle, $defer_scripts, true)) {
+        return str_replace(' src=', ' defer src=', $tag);
+    }
+    return $tag;
+}, 10, 3);
+
+// ODER: modernes Array-Format (WP 6.3+)
+wp_enqueue_script('mein-script', $src, $deps, $ver,
+    ['in_footer' => true, 'strategy' => 'defer']
+);
+```
+
+**Kritisches CSS inline ausgeben:**
+```php
+add_action('wp_head', function () {
+    $css_pfad = get_stylesheet_directory() . '/css/critical.css';
+    if (file_exists($css_pfad)) {
+        echo '<style id="critical-css">' . file_get_contents($css_pfad) . '</style>';
+    }
+}, 1);
+```
+
+**Nicht-benötigte WordPress-Scripts deaktivieren:**
+```php
+add_action('wp_enqueue_scripts', function () {
+    // Emoji-Scripts entfernen (spart ~10 KB)
+    remove_action('wp_head', 'print_emoji_detection_script', 7);
+    remove_action('wp_print_styles', 'print_emoji_styles');
+
+    // Block-Library-Styles entfernen wenn kein Gutenberg im Frontend
+    wp_dequeue_style('wp-block-library');
+    wp_dequeue_style('wp-block-library-theme');
+    wp_dequeue_style('global-styles');
+
+    // Divi-spezifisch: Fitvids nur laden wenn Video-Module genutzt
+    if (!is_singular() || !has_shortcode(get_post()->post_content ?? '', 'et_pb_video')) {
+        wp_dequeue_script('fitvids');
+    }
+}, 100);
+```
+
+**Core Web Vitals Checkliste:**
+- [ ] **LCP (Largest Contentful Paint) < 2,5s** — Hero-Bild `loading="eager"` + `fetchpriority="high"`, kein Lazy-Loading für Above-the-fold-Bilder
+- [ ] **CLS (Cumulative Layout Shift) < 0,1** — Bild-Dimensionen immer angeben (`width`/`height`), Font-Fallbacks definieren (`font-display: swap`)
+- [ ] **INP (Interaction to Next Paint) < 200ms** — Lange Tasks vermeiden, Event-Handler nicht blockieren
+- [ ] **TTFB (Time to First Byte) < 800ms** — Server-Caching, PHP-Version, OPcache aktivieren
+
+**Hosting-spezifische Caching-Empfehlungen:**
+
+| Hosting | Empfohlenes Plugin | Hinweis |
+|---------|-------------------|---------|
+| Beliebig | WP Rocket | Beste Out-of-the-box Performance |
+| LiteSpeed | LiteSpeed Cache | Kostenlos, sehr effektiv |
+| SiteGround | SG Optimizer | Automatisch vorinstalliert |
+| Cloudflare | Cloudflare Plugin | APO für WP verfügbar |
+| Lokal / Dev | Kein Caching | Cache immer deaktivieren in Entwicklung |
 
 ---
 

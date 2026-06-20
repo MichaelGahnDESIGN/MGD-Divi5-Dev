@@ -2,6 +2,17 @@
 
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 
+## [1.2.0] — 2026-06-20
+
+### Hinzugefügt
+
+- `/divi-module` — Natives Divi 5 Custom Module erstellen (React/TSX, PHP Traits, `module.json`, Webpack-Externals, D5/D4-Kompatibilitätserkennung)
+- `/divi-optimize` — Performance-Optimierung: Core Web Vitals, kritisches CSS, Script-Defer-Strategie, Bild-Optimierung, Caching-Konfiguration, ungenutzte WP-Scripts deaktivieren
+- Wiki: GSAP SplitText — vollständiges Beispiel für Textanimationen (Zeichen, Wörter, Zeilen) mit Divi-Kompatibilität
+- Beide neuen Commands in `.claude/commands/` und `.codex/commands/`
+
+---
+
 ## [1.1.0] — 2026-06-20
 
 ### Hinzugefügt
