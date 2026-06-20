@@ -2,6 +2,25 @@
 
 Alle nennenswerten Änderungen an diesem Projekt werden hier dokumentiert.
 
+## [1.1.0] — 2026-06-20
+
+### Hinzugefügt
+
+- GitHub Wiki mit 12 Seiten und umfangreichen Code-Beispielen
+  - Schnellstart — Installation und alle Slash-Commands mit Beispielen
+  - Divi Child-Theme erstellen — vollständige Anleitung mit allen Dateien
+  - WordPress-Plugin entwickeln — Sicherheit, AJAX, REST API
+  - Animations-Stack — GSAP, Three.js, AOS, Lenis, Alpine.js, Swiper mit Divi-Fixes
+  - DSGVO und Fonts — lokales Font-Hosting, Bunny Fonts, Checkliste
+  - Divi-Quirks und Fixes — CSS-Spezifität, Builder-Ausschluss, jQuery noConflict
+  - Docker-Entwicklungsumgebung — docker-compose.yml, WP-CLI, PHPMyAdmin
+  - Library-Referenz — Lizenzen, Versionen, Download-Quellen, DSGVO-konforme Icons
+  - Praxisbeispiel Unternehmenswebsite — Hero-Animation, Zähler, AJAX-Kontaktformular
+  - Praxisbeispiel App-Landingpage — Three.js Partikel, horizontaler Scroll, Swiper
+  - Praxisbeispiel WooCommerce — Template-Overrides, Produkt-Animationen, Payments
+
+---
+
 ## [1.0.0] — 2026-06-20
 
 ### Hinzugefügt
